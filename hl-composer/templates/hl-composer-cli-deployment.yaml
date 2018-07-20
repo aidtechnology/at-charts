@@ -1,0 +1,73 @@
+---
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: {{ include "hl-composer.fullname" . }}-cli
+  labels:
+    name: {{ include "hl-composer.fullname" . }}-cli
+{{ include "labels.standard" . | indent 4 }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ include "hl-composer.name" . }}
+      release: {{ .Release.Name }}
+  template:
+    metadata:
+      name: {{ include "hl-composer.fullname" . }}-cli
+      labels:
+        name: {{ include "hl-composer.fullname" . }}-cli
+{{ include "labels.standard" . | indent 8 }}
+    spec:
+      volumes:
+        - name: persistent-volume
+          persistentVolumeClaim:
+            claimName: {{ include "hl-composer.fullname" . }}
+        - name: blockchain-network
+          secret:
+            secretName: {{ .Values.cli.secrets.blockchainNetwork }}
+        - name: admin-cert
+          secret:
+            secretName: {{ .Values.cli.secrets.adminCert }}
+        - name: admin-key
+          secret:
+            secretName: {{ .Values.cli.secrets.adminKey }}
+        - name: hlc-connection
+          configMap:
+            name: {{ .Values.cli.secrets.hlcConnection }}
+      containers:
+        - name: cli
+          image: "{{ .Values.cli.image.repository }}:{{ .Values.cli.image.tag }}"
+          imagePullPolicy: {{ .Values.cli.image.pullPolicy }}
+        # TODO: Add liveness and readiness probes
+        # Run infinitely
+          command:
+            - sh
+            - -c
+            - |
+              tail -f /dev/null
+          volumeMounts:
+            - mountPath: /home/composer/.composer
+              name: persistent-volume
+            - mountPath: /hl_config/blockchain_network
+              name: blockchain-network
+            - mountPath: /hl_config/admin/signcerts
+              name: admin-cert
+            - mountPath: /hl_config/admin/keystore
+              name: admin-key
+            - mountPath: /hl_config/hlc-connection
+              name: hlc-connection
+          resources:
+{{ toYaml .Values.cli.resources | indent 12 }}
+    {{- with .Values.cli.nodeSelector }}
+      nodeSelector:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+    {{- with .Values.cli.affinity }}
+      affinity:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+    {{- with .Values.cli.tolerations }}
+      tolerations:
+{{ toYaml . | indent 8 }}
+    {{- end }}

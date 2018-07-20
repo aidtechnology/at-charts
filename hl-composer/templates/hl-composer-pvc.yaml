@@ -1,0 +1,13 @@
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: {{ include "hl-composer.fullname" . }}
+  labels:
+{{ include "labels.standard" . | indent 4 }}
+spec:
+  storageClassName: {{ .Values.persistence.storageClass }}
+  accessModes: {{ .Values.persistence.accessModes }}
+  resources:
+    requests:
+      storage: {{ .Values.persistence.capacity }}
