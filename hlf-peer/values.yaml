@@ -39,6 +39,8 @@ peer:
   couchdbInstance: cdb-peer1
   ## MSP ID of the Peer
   mspID: Org1MSP
+  # Tools version
+  hlfToolsVersion: 1.1.0
 
 secrets:
   ## This should contain "channel" transaction derived from a configtx.yaml

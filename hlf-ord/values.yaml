@@ -36,6 +36,8 @@ ord:
   type: solo
   ## MSP ID of the Orderer
   mspID: OrdererMSP
+  # Tools version
+  hlfToolsVersion: 1.1.0
 
 secrets:
   ## This should contain "genesis" block derived from a configtx.yaml
