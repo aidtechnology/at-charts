@@ -6,8 +6,14 @@ metadata:
   labels:
 {{ include "labels.standard" . | indent 4 }}
 spec:
-  storageClassName: {{ .Values.persistence.storageClass }}
   accessModes: {{ .Values.persistence.accessModes }}
   resources:
     requests:
       storage: {{ .Values.persistence.capacity }}
+  {{- if .Values.persistence.storageClass }}
+  {{- if (eq "-" .Values.persistence.storageClass) }}
+  storageClassName: ""
+  {{- else }}
+  storageClassName: "{{ .Values.persistence.storageClass }}"
+  {{- end }}
+  {{- end }}
