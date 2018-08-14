@@ -4,8 +4,12 @@
 
 persistence:
   capacity: 1Gi
-  # If set to "", disables dynamic provisioning and create persistent volumes specified
-  # from the templates. If set, use the defined storage class and do not create pvs.
+  ## If defined, storageClassName: <storageClass>
+  ## If set to "-", storageClassName: "", which disables dynamic provisioning
+  ## If undefined (the default) or set to null, no storageClassName spec is
+  ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
+  ##   GKE, AWS & OpenStack)
+  ##
   storageClass: "azurefile0permissive"
   accessModes:
     - ReadWriteMany
@@ -97,7 +101,7 @@ pg:
 
   image:
     repository: hyperledger/composer-playground
-    tag: 0.19.10
+    tag: 0.19.14
     pullPolicy: IfNotPresent
 
   service:
