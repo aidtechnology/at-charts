@@ -100,8 +100,8 @@ The following table lists the configurable parameters of the Hyperledger Compose
 | `rest.ingress.path`                  | Ingress path                                         | `/`                                                        |
 | `rest.ingress.hosts`                 | Ingress hostnames                                    | `[]`                                                       |
 | `rest.ingress.tls`                   | Ingress TLS configuration                            | `[]`                                                       |
-| `rest.config.apiKey                  | API key for the REST server                          | ``                                                         |
-| `rest.config.composerRestServerCard` | Card to use to initialise the REST server            |                                                            |
+| `rest.config.apiKey`                 | API key for the REST server                          | ``                                                         |
+| `rest.config.composerRestServerCard` | Card to use to initialise the REST server            | ``                                                          |
 | `rest.resources`                     | CPU/Memory resource requests/limits                  | `{}`                                                       |
 | `rest.nodeSelector`                  | Node labels for pod assignment                       | `{}`                                                       |
 | `rest.tolerations`                   | Toleration labels for pod assignment                 | `[]`                                                       |
