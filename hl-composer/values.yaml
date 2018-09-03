@@ -68,8 +68,8 @@ rest:
       # kubernetes.io/ingress.class: nginx
       # certmanager.k8s.io/cluster-issuer: "letsencrypt-staging"
     path: /
-    hosts:
-      - hl-composer-rest.local
+    hosts: []
+    #  - hl-composer-rest.local
     tls: []
     #  - secretName: hl-composer-rest-tls
     #    hosts:
@@ -119,8 +119,8 @@ pg:
       # kubernetes.io/ingress.class: nginx
       # certmanager.k8s.io/cluster-issuer: "letsencrypt-staging"
     path: /
-    hosts:
-      - hl-composer-pg.local
+    hosts: []
+    #  - hl-composer-pg.local
     tls: []
     #  - secretName: hl-composer-pg-tls
     #    hosts:
