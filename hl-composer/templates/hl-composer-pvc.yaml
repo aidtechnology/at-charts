@@ -1,15 +1,20 @@
----
+{{- if and .Values.persistence.enabled (not .Values.persistence.existingClaim) }}
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
   name: {{ include "hl-composer.fullname" . }}
   labels:
 {{ include "labels.standard" . | indent 4 }}
+{{- if .Values.persistence.annotations }}
+  annotations:
+{{ toYaml .Values.persistence.annotations | indent 4 }}
+{{- end }}
 spec:
-  accessModes: {{ .Values.persistence.accessModes }}
+  accessModes:
+    - {{ .Values.persistence.accessMode | quote }}
   resources:
     requests:
-      storage: {{ .Values.persistence.capacity }}
+      storage: {{ .Values.persistence.size | quote }}
   {{- if .Values.persistence.storageClass }}
   {{- if (eq "-" .Values.persistence.storageClass) }}
   storageClassName: ""
@@ -17,3 +22,4 @@ spec:
   storageClassName: "{{ .Values.persistence.storageClass }}"
   {{- end }}
   {{- end }}
+{{- end }}

@@ -3,6 +3,10 @@
 # Declare variables to be passed into your templates.
 
 persistence:
+  # By default we must set this to false to enable chart to pass tests
+  # However, in a proper deployment, you should set this to "true", so that the different components can share data
+  enabled: false
+  annotations: {}
   capacity: 1Gi
   ## If defined, storageClassName: <storageClass>
   ## If set to "-", storageClassName: "", which disables dynamic provisioning
@@ -10,9 +14,8 @@ persistence:
   ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
   ##   GKE, AWS & OpenStack)
   ##
-  storageClass: "azurefile0permissive"
-  accessModes:
-    - ReadWriteMany
+  storageClass: ""
+  accessMode: ReadWriteMany
 
 cli:
   image:
@@ -20,14 +23,14 @@ cli:
     tag: 0.20.0
     pullPolicy: IfNotPresent
 
-  secrets:
+  secrets: {}
     # This should contain the packaged .bna network file.
-    blockchainNetwork: bc--bna
+    # blockchainNetwork: bc--bna
     # We need a secret for the Organisation certificate and key
-    adminCert: hl--peer-admincert
-    adminKey: hl--peer-adminkey
+    # adminCert: hl--peer-admincert
+    # adminKey: hl--peer-adminkey
     # Composer Connection JSON
-    hlcConnection: hl--connection
+    # hlcConnection: hl--connection
 
   resources: {}
     # We usually recommend not to specify default resources and to leave this as a conscious
@@ -50,7 +53,7 @@ cli:
 rest:
   image:
     repository: hyperledger/composer-rest-server
-    tag: 0.19.10
+    tag: 0.20.0
     pullPolicy: IfNotPresent
 
   service:
@@ -101,7 +104,7 @@ pg:
 
   image:
     repository: hyperledger/composer-playground
-    tag: 0.19.14
+    tag: 0.20.0
     pullPolicy: IfNotPresent
 
   service:

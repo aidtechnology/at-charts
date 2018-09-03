@@ -21,8 +21,12 @@ spec:
     spec:
       volumes:
         - name: persistent-volume
+        {{- if .Values.persistence.enabled }}
           persistentVolumeClaim:
-            claimName: {{ include "hl-composer.fullname" . }}
+            claimName: {{ .Values.persistence.existingClaim | default (include "hl-composer.fullname" .) }}
+        {{- else }}
+          emptyDir: {}
+        {{- end }}
       containers:
         - name: rest-server
           image: "{{ .Values.rest.image.repository }}:{{ .Values.rest.image.tag }}"
