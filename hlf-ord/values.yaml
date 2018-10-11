@@ -43,6 +43,10 @@ ord:
   type: solo
   ## MSP ID of the Orderer
   mspID: OrdererMSP
+  # TLS
+  tls:
+    enabled: "false"
+
 
 secrets: {}
   ## This should contain "genesis" block derived from a configtx.yaml
