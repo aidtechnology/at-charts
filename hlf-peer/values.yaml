@@ -58,8 +58,10 @@ secrets: {}
   ## This should contain the Private Key of the Peer Organisation admin
   ## This is necessary to successfully join a channel
   # adminKey: hlf--peer-adminkey
-  ## This should contain the CA server's TLS details under the key tls.crt (e.g. a Let's Encrypt Certificate PEM)
-  # caServerTls: ca--tls
+  ## These should contain the Peer's CA server's TLS details under the key tls.crt (e.g. a Let's Encrypt Certificate PEM)
+  # caPeerServerTls: ca-peer--tls
+  ## These should contain the Orderer's CA server's TLS details under the key tls.crt (e.g. a Let's Encrypt Certificate PEM)
+  # caOrdServerTls: ca-ord--tls
 
 resources: {}
   ## We usually recommend not to specify default resources and to leave this as a conscious

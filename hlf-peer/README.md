@@ -95,7 +95,8 @@ The following table lists the configurable parameters of the Hyperledger Fabric 
 | `secrets.channel`                  | Secret containing Channel tx for peer to create/join | ``                                                         |
 | `secrets.adminCert`                | Secret containing Peer Org admin certificate         | ``                                                         |
 | `secrets.adminCert`                | Secret containing Peer Org admin private key         | ``                                                         |
-| `secrets.caServerTls`              | Secret containing CA Server TLS certificate      | `ca--tls`                                                  |
+| `secrets.caPeerServerTls`          | Secret containing CA Peer Server TLS cert            | `ca-peer--tls`                                             |
+| `secrets.caOrdServerTls`           | Secret containing CA Orderer Server TLS cert         | `ca-ord--tls`                                              |
 | `resources`                        | CPU/Memory resource requests/limits                  | `{}`                                                       |
 | `nodeSelector`                     | Node labels for pod assignment                       | `{}`                                                       |
 | `tolerations`                      | Toleration labels for pod assignment                 | `[]`                                                       |
