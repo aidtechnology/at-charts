@@ -25,8 +25,9 @@ data:
   ORDERER_GENERAL_GENESISMETHOD: file
   ORDERER_GENERAL_GENESISFILE: /hl_config/genesis/genesis.block
   ORDERER_GENERAL_GENESISPROFILE: initial
+  # TODO: We will need to merge changes upstream in TLS enabled Orderer
   ORDERER_GENERAL_TLS_ENABLED: "false"
-  ORDERER_GENERAL_TLS_CERTIFICATE: "/var/hyperledger/tls/tls.crt"
-  ORDERER_GENERAL_TLS_PRIVATEKEY: "/var/hyperledger/tls/tls.key"
+  ORDERER_GENERAL_TLS_CERTIFICATE: "/var/hyperledger/msp_tls/tls.crt"
+  ORDERER_GENERAL_TLS_PRIVATEKEY: "/var/hyperledger/msp_tls/tls.key"
   GODEBUG: "netdns=go"
   ADMIN_MSP_PATH: /var/hyperledger/admin_msp

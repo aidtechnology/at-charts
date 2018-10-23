@@ -43,6 +43,11 @@ spec:
           secret:
             secretName: {{ .Values.secrets.ord.intCaCert }}
         {{- end }}
+        {{- if .Values.secrets.ord.tls }}
+        - name: tls
+          secret:
+            secretName: {{ .Values.secrets.ord.tls }}
+        {{- end }}
         {{- if .Values.secrets.genesis }}
         - name: genesis
           secret:
@@ -90,27 +95,7 @@ spec:
                 sleep 60
               done
 
-              # Create TLS certificate for Orderer
-              if [ ! -f ${ORDERER_GENERAL_TLS_PRIVATEKEY} ]
-              then
-
-                {{- if .Values.secrets.caServerTls }}
-                echo ">\033[0;35m fabric-ca-client enroll -d --enrollment.profile tls -u https://${CA_USERNAME}:${CA_PASSWORD}@${CA_ADDRESS} -M /tmp/tls --csr.hosts {{ include "hlf-ord.fullname" . }} --tls.certfiles /hl_config/ca_server/tls/tls.crt \033[0m"
-                fabric-ca-client enroll -d --enrollment.profile tls -u https://${CA_USERNAME}:${CA_PASSWORD}@${CA_ADDRESS} -M /tmp/tls --csr.hosts {{ include "hlf-ord.fullname" . }} --tls.certfiles /hl_config/ca_server/tls/tls.crt
-                {{- else }}
-                echo ">\033[0;35m fabric-ca-client enroll -d --enrollment.profile tls -u http://${CA_USERNAME}:${CA_PASSWORD}@${CA_ADDRESS} -M /tmp/tls --csr.hosts {{ include "hlf-ord.fullname" . }} \033[0m"
-                fabric-ca-client enroll -d --enrollment.profile tls -u http://${CA_USERNAME}:${CA_PASSWORD}@${CA_ADDRESS} -M /tmp/tls --csr.hosts {{ include "hlf-ord.fullname" . }}
-                {{- end }}
-
-
-                mkdir -p $(dirname $ORDERER_GENERAL_TLS_PRIVATEKEY)
-                cp /tmp/tls/keystore/* $ORDERER_GENERAL_TLS_PRIVATEKEY
-                mkdir -p $(dirname $ORDERER_GENERAL_TLS_CERTIFICATE)
-                cp /tmp/tls/signcerts/* $ORDERER_GENERAL_TLS_CERTIFICATE
-                rm -rf /tmp/tls
-              fi
-
-              # Create directories to avoid restarts
+              echo "\033[0;32m Create ${ORDERER_FILELEDGER_LOCATION} directory to avoid restarts \033[0m"
               mkdir -p ${ORDERER_FILELEDGER_LOCATION}
               mkdir -p ${ORDERER_FILELEDGER_LOCATION}/index
 
@@ -152,6 +137,10 @@ spec:
               name: intcacert
             - mountPath: /var/hyperledger/admin_msp/intermediatecerts
               name: intcacert
+            {{- end }}
+            {{- if .Values.secrets.ord.tls }}
+            - mountPath: /var/hyperledger/msp_tls
+              name: tls
             {{- end }}
             {{- if .Values.secrets.genesis }}
             - mountPath: /hl_config/genesis

@@ -57,6 +57,8 @@ secrets:
     # caCert: hlf--ord1-cacert
     ## Intermediate CA Cert (optional), saved under 'intermediatecacert.pem'
     # intCaCert: hlf--ord1-caintcert
+    ## TLS secret, saved under keys 'tls.crt' and 'tls.key' (to conform with K8S nomenclature)
+    # tls: hlf--ord1-tls
   ## This should contain "genesis" block derived from a configtx.yaml
   ## configtxgen -profile OrdererGenesis -outputBlock genesis.block
   # genesis: hlf--genesis
