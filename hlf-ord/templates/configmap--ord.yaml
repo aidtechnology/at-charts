@@ -25,9 +25,11 @@ data:
   ORDERER_GENERAL_GENESISMETHOD: file
   ORDERER_GENERAL_GENESISFILE: /hl_config/genesis/genesis.block
   ORDERER_GENERAL_GENESISPROFILE: initial
-  ORDERER_GENERAL_TLS_ENABLED: {{ .Values.ord.tls.enabled | quote }}
+  ORDERER_GENERAL_TLS_ENABLED: {{ .Values.ord.tls.server.enabled | quote }}
   ORDERER_GENERAL_TLS_CERTIFICATE: "/var/hyperledger/tls/tls.crt"
   ORDERER_GENERAL_TLS_PRIVATEKEY: "/var/hyperledger/tls/tls.key"
   ORDERER_GENERAL_TLS_ROOTCAS: "/var/hyperledger/msp/cacerts/*.pem"
+  ORDERER_GENERAL_TLS_CLIENTAUTHREQUIRED: {{ .Values.ord.tls.client.enabled | quote }}
+  ORDERER_GENERAL_TLS_CLIENTROOTCAS: "/var/hyperledger/msp/cacerts/*.pem"
   GODEBUG: "netdns=go"
   ADMIN_MSP_PATH: /var/hyperledger/admin_msp

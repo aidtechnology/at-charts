@@ -113,12 +113,15 @@ spec:
               cp ${ORDERER_GENERAL_LOCALMSPDIR}/intermediatecerts/* ${ADMIN_MSP_PATH}/intermediatecerts
 
               # Create TLS certificate for Orderer
-              if [ ${ORDERER_GENERAL_TLS_ENABLED} = true ]
+              if [ ${ORDERER_GENERAL_TLS_ENABLED} = true ] || [ ${ORDERER_GENERAL_TLS_CLIENTAUTHREQUIRED} = true ]
               then
 
                 if [ ! -f ${ORDERER_GENERAL_TLS_PRIVATEKEY} ]
                 then
                   {{- if .Values.secrets.caServerTls }}
+                  mkdir -p $(dirname $ORDERER_GENERAL_TLS_PRIVATEKEY)
+                  mkdir -p $(dirname $ORDERER_GENERAL_TLS_CERTIFICATE)
+
                   echo ">\033[0;35m fabric-ca-client enroll -d --enrollment.profile tls -u https://${CA_USERNAME}:${CA_PASSWORD}@${CA_ADDRESS} -M /tmp/tls --csr.hosts {{ include "hlf-ord.fullname" . }} --tls.certfiles /hl_config/ca_server/tls/tls.crt \033[0m"
                   fabric-ca-client enroll -d --enrollment.profile tls -u https://${CA_USERNAME}:${CA_PASSWORD}@${CA_ADDRESS} -M /tmp/tls --csr.hosts {{ include "hlf-ord.fullname" . }} --tls.certfiles /hl_config/ca_server/tls/tls.crt
                   {{- else }}
@@ -126,9 +129,7 @@ spec:
                   fabric-ca-client enroll -d --enrollment.profile tls -u http://${CA_USERNAME}:${CA_PASSWORD}@${CA_ADDRESS} -M /tmp/tls --csr.hosts {{ include "hlf-ord.fullname" . }}
                   {{- end }}
 
-                  mkdir -p $(dirname $ORDERER_GENERAL_TLS_PRIVATEKEY)
                   cp /tmp/tls/keystore/* $ORDERER_GENERAL_TLS_PRIVATEKEY
-                  mkdir -p $(dirname $ORDERER_GENERAL_TLS_CERTIFICATE)
                   cp /tmp/tls/signcerts/* $ORDERER_GENERAL_TLS_CERTIFICATE
                   rm -rf /tmp/tls
                 fi
@@ -136,6 +137,8 @@ spec:
                 # And we need to expand the location of the ROOT CA certificate
                 echo ">\033[0;32m ORDERER_GENERAL_TLS_ROOTCAS is equal to $(echo $ORDERER_GENERAL_TLS_ROOTCAS) \033[0m"
                 export ORDERER_GENERAL_TLS_ROOTCAS=`echo $ORDERER_GENERAL_TLS_ROOTCAS`
+                echo ">\033[0;32m ORDERER_GENERAL_TLS_CLIENTROOTCAS is equal to $(echo $ORDERER_GENERAL_TLS_CLIENTROOTCAS) \033[0m"
+                export ORDERER_GENERAL_TLS_CLIENTROOTCAS=`echo $ORDERER_GENERAL_TLS_CLIENTROOTCAS`
               fi
 
               # Create directories to avoid restarts

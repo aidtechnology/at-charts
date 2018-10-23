@@ -45,7 +45,10 @@ ord:
   mspID: OrdererMSP
   # TLS
   tls:
-    enabled: "false"
+    server:
+      enabled: "false"
+    client:
+      enabled: "false"
 
 
 secrets: {}
