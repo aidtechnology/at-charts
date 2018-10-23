@@ -46,6 +46,11 @@ peer:
   couchdbInstance: cdb-peer1
   ## MSP ID of the Peer
   mspID: Org1MSP
+  tls:
+    server:
+      enabled: "false"
+    client:
+      enabled: "false"
 
 # Secrets references, empty by default, fill in with your secrets (particularly adminCert) or add Peer Admin certificate manually after launching chart.
 secrets: {}
@@ -58,8 +63,10 @@ secrets: {}
   ## This should contain the Private Key of the Peer Organisation admin
   ## This is necessary to successfully join a channel
   # adminKey: hlf--peer-adminkey
-  ## This should contain the CA server's TLS details under the key tls.crt (e.g. a Let's Encrypt Certificate PEM)
-  # caServerTls: ca--tls
+  ## These should contain the Peer's CA server's TLS details under the key tls.crt (e.g. a Let's Encrypt Certificate PEM)
+  # caPeerServerTls: ca-peer--tls
+  ## These should contain the Orderer's CA server's TLS details under the key tls.crt (e.g. a Let's Encrypt Certificate PEM)
+  # caOrdServerTls: ca-ord--tls
 
 resources: {}
   ## We usually recommend not to specify default resources and to leave this as a conscious

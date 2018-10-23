@@ -43,6 +43,13 @@ ord:
   type: solo
   ## MSP ID of the Orderer
   mspID: OrdererMSP
+  # TLS
+  tls:
+    server:
+      enabled: "false"
+    client:
+      enabled: "false"
+
 
 secrets:
   ## These secrets should contain the Orderer crypto materials and credentials
