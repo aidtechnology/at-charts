@@ -28,10 +28,8 @@ data:
   ORDERER_GENERAL_TLS_ENABLED: {{ .Values.ord.tls.server.enabled | quote }}
   ORDERER_GENERAL_TLS_CERTIFICATE: "/var/hyperledger/msp_tls/tls.crt"
   ORDERER_GENERAL_TLS_PRIVATEKEY: "/var/hyperledger/msp_tls/tls.key"
-  # TODO: We should specify and mount this as a secret
-  ORDERER_GENERAL_TLS_ROOTCAS: "/var/hyperledger/msp_tls/cacerts/cert.pem"
+  ORDERER_GENERAL_TLS_ROOTCAS: "/var/hyperledger/msp_tls/cert.pem"
   ORDERER_GENERAL_TLS_CLIENTAUTHREQUIRED: {{ .Values.ord.tls.client.enabled | quote }}
-  # TODO: We should specify and mount this as a secret
-  ORDERER_GENERAL_TLS_CLIENTROOTCAS: "/var/hyperledger/msp_tls/cacerts/cert.pem"
+  ORDERER_GENERAL_TLS_CLIENTROOTCAS: "/var/hyperledger/msp_tls/cert.pem"
   GODEBUG: "netdns=go"
   ADMIN_MSP_PATH: /var/hyperledger/admin_msp

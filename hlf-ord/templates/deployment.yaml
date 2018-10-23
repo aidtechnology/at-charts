@@ -52,6 +52,11 @@ spec:
           secret:
             secretName: {{ .Values.secrets.ord.tls }}
         {{- end }}
+        {{- if .Values.secrets.ord.tlsRootCert }}
+        - name: tls-rootcert
+          secret:
+          secretName: {{ .Values.secrets.ord.tlsRootCert }}
+        {{- end }}
         {{- if .Values.secrets.genesis }}
         - name: genesis
           secret:
@@ -145,6 +150,10 @@ spec:
             {{- if .Values.secrets.ord.tls }}
             - mountPath: /var/hyperledger/msp_tls
               name: tls
+            {{- end }}
+            {{- if .Values.secrets.ord.tlsRootCert }}
+            - mountPath: /var/hyperledger/msp_tls
+              name: tls-rootcert
             {{- end }}
             {{- if .Values.secrets.genesis }}
             - mountPath: /hl_config/genesis
