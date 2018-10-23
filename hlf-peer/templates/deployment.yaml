@@ -125,11 +125,14 @@ spec:
               cp ${CORE_PEER_MSPCONFIGPATH}/intermediatecerts/* ${ADMIN_MSP_PATH}/intermediatecerts
 
               # Create TLS certificate for Peer
-              if [ ${CORE_PEER_TLS_CLIENTAUTHREQUIRED} = true ]
+              if [ ${CORE_PEER_TLS_ENABLED} = true ] || [ ${CORE_PEER_TLS_CLIENTAUTHREQUIRED} = true ]
               then
-                if [ ! -f ${CORE_PEER_TLS_PRIVATEKEY} ]
+                if [ ! -f ${CORE_PEER_TLS_KEY_FILE} ]
                 then
                   {{- if .Values.secrets.caPeerServerTls }}
+                  mkdir -p $(dirname $CORE_PEER_TLS_KEY_FILE)
+                  mkdir -p $(dirname $CORE_PEER_TLS_CERT_FILE)
+
                   echo ">\033[0;35m fabric-ca-client enroll -d --enrollment.profile tls -u https://${CA_USERNAME}:${CA_PASSWORD}@${CA_ADDRESS} -M /tmp/tls --csr.hosts {{ include "hlf-peer.fullname" . }} --tls.certfiles /hl_config/ca/peer_server/tls/tls.crt \033[0m"
                   fabric-ca-client enroll -d --enrollment.profile tls -u https://${CA_USERNAME}:${CA_PASSWORD}@${CA_ADDRESS} -M /tmp/tls --csr.hosts {{ include "hlf-peer.fullname" . }} --tls.certfiles /hl_config/ca/peer_server/tls/tls.crt
                   {{- else }}
@@ -137,16 +140,16 @@ spec:
                   fabric-ca-client enroll -d --enrollment.profile tls -u http://${CA_USERNAME}:${CA_PASSWORD}@${CA_ADDRESS} -M /tmp/tls --csr.hosts {{ include "hlf-peer.fullname" . }}
                   {{- end }}
 
-                  mkdir -p $(dirname $CORE_PEER_TLS_PRIVATEKEY)
-                  cp /tmp/tls/keystore/* $CORE_PEER_TLS_PRIVATEKEY
-                  mkdir -p $(dirname $CORE_PEER_TLS_CERTIFICATE)
-                  cp /tmp/tls/signcerts/* $CORE_PEER_TLS_CERTIFICATE
+                  cp /tmp/tls/keystore/* $CORE_PEER_TLS_KEY_FILE
+                  cp /tmp/tls/signcerts/* $CORE_PEER_TLS_CERT_FILE
                   #rm -rf /tmp/tls
                 fi
 
                 # And we need to expand the location of the ROOT CA certificate
                 echo ">\033[0;32m CORE_PEER_TLS_ROOTCERT_FILE is equal to $(echo $CORE_PEER_TLS_ROOTCERT_FILE) \033[0m"
                 export CORE_PEER_TLS_ROOTCERT_FILE=`echo $CORE_PEER_TLS_ROOTCERT_FILE`
+                echo ">\033[0;32m CORE_PEER_TLS_CLIENTROOTCAS_FILES is equal to $(echo $CORE_PEER_TLS_CLIENTROOTCAS_FILES) \033[0m"
+                export CORE_PEER_TLS_CLIENTROOTCAS_FILES=`echo $CORE_PEER_TLS_CLIENTROOTCAS_FILES`
               fi
 
               if [ ! -d ${FABRIC_CFG_PATH} ]
