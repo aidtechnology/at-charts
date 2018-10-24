@@ -85,18 +85,21 @@ The following table lists the configurable parameters of the Hyperledger Fabric 
 | `persistence.annotations`          | Persistent Volume annotations                        | `{}`                                                       |
 | `persistence.size`                 | Size of data volume (adjust for production!)         | `1Gi`                                                      |
 | `persistence.storageClass`         | Storage class of backing PVC                         | `default`                                                  |
-| `caAddress`                        | Address of CA to register/enroll with                | `hlf-ca.local`                                             |
-| `caUsername`                       | Username for registering/enrolling with CA           | `peer1`                                                    |
-| `caPassword`                       | Password for registering/enrolling with CA           | Random 24 alphanumeric characters                          |
-| `peer.hlfToolsVersion`             | Which version of HLF tools we use (e.g. CA client)   | `1.1.0`                                                    |
 | `peer.databaseType`                | Database type to use (`goleveldb` or `CouchDB`)      | `goleveldb`                                                |
 | `peer.couchdbInstance              | CouchDB chart name to use `cdb-peer1`                | `cdb-peer1`                                                |
 | `peer.mspID`                       | ID of MSP the Peer belongs to                        | `Org1MSP`                                                  |
+| `peer.tls.server.enabled`          | Do we enable server-side TLS?                        | `false`                                                    |
+| `peer.tls.client.enabled`          | Do we enable client-side TLS?                        | `false`                                                    |
+| `secrets.peer.cred`                | Credentials: 'CA_USERNAME' and 'CA_PASSWORD'         | ``                                                         |
+| `secrets.peer.cert`                | Certificate: as 'cert.pem'                           | ``                                                         |
+| `secrets.peer.key`                 | Private key: as 'key.pem'                            | ``                                                         |
+| `secrets.peer.caCert`              | CA Cert: as 'cacert.pem'                             | ``                                                         |
+| `secrets.peer.intCaCert`           | Int. CA Cert: as 'intermediatecacert.pem'            | ``                                                         |
+| `secrets.peer.tls`                 | TLS secret: as 'tls.crt' and 'tls.key'               | ``                                                         |
+| `secrets.peer.tlsRootCert`         | TLS root CA certificate: as 'cert.pem'               | ``                                                         |
 | `secrets.channel`                  | Secret containing Channel tx for peer to create/join | ``                                                         |
 | `secrets.adminCert`                | Secret containing Peer Org admin certificate         | ``                                                         |
 | `secrets.adminCert`                | Secret containing Peer Org admin private key         | ``                                                         |
-| `secrets.caPeerServerTls`          | Secret containing CA Peer Server TLS cert            | `ca-peer--tls`                                             |
-| `secrets.caOrdServerTls`           | Secret containing CA Orderer Server TLS cert         | `ca-ord--tls`                                              |
 | `resources`                        | CPU/Memory resource requests/limits                  | `{}`                                                       |
 | `nodeSelector`                     | Node labels for pod assignment                       | `{}`                                                       |
 | `tolerations`                      | Toleration labels for pod assignment                 | `[]`                                                       |
