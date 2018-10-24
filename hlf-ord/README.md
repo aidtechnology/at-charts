@@ -94,7 +94,6 @@ The following table lists the configurable parameters of the Hyperledger Fabric 
 | `persistence.annotations`          | Persistent Volume annotations                    | `{}`                                                       |
 | `persistence.size`                 | Size of data volume (adjust for production!)     | `1Gi`                                                      |
 | `persistence.storageClass`         | Storage class of backing PVC                     | `default`                                                  |
-| `ord.hlfToolsVersion`              | Version of Hyperledger Fabric tools used         | `1.1.0`                                                    |
 | `ord.type`                         | Type of Orderer (`solo` or `kafka`)              | `solo`                                                     |
 | `ord.mspID`                        | ID of MSP the Orderer belongs to                 | `OrdererMSP`                                               |
 | `ord.tls.server.enabled`           | Do we enable server-side TLS?                    | `false`                                                    |
@@ -108,7 +107,6 @@ The following table lists the configurable parameters of the Hyperledger Fabric 
 | `secrets.ord.tlsRootCert`          | TLS root CA certificate: as 'cert.pem'           | ``                                                         |
 | `secrets.genesis`                  | Secret containing Genesis Block for orderer      | ``                                                         |
 | `secrets.adminCert`                | Secret containing Orderer Org admin certificate  | ``                                                         |
-| `secrets.caServerTls`              | Secret containing CA Server TLS certificate      | ``                                                         |
 | `resources`                        | CPU/Memory resource requests/limits              | `{}`                                                       |
 | `nodeSelector`                     | Node labels for pod assignment                   | `{}`                                                       |
 | `tolerations`                      | Toleration labels for pod assignment             | `[]`                                                       |

@@ -167,10 +167,6 @@ spec:
             - mountPath: /var/hyperledger/msp/admincerts
               name: admin-cert
             {{- end }}
-            {{- if .Values.secrets.caServerTls }}
-            - mountPath: /hl_config/ca_server/tls
-              name: ca-server-tls
-            {{- end }}
           resources:
 {{ toYaml .Values.resources | indent 12 }}
     {{- with .Values.nodeSelector }}

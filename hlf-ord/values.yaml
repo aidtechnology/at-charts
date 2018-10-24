@@ -27,18 +27,9 @@ persistence:
   # existingClaim: ""
 
 ##################################
-## Further configuration options #
+## Orderer configuration options #
 ##################################
-## Address of Certificate Authority where O
-caAddress: hlf-ca.local
-## Username for registering/enrolling with CA
-caUsername: ord1
-## Password for registering/enrolling with CA  (defaults to random 24 alphanumeric)
-# caPassword:
-
 ord:
-  # Tools version
-  hlfToolsVersion: 1.2.0
   ## Type of Orderer, `solo` or `kafka`
   type: solo
   ## MSP ID of the Orderer
@@ -74,8 +65,6 @@ secrets:
   ## This should contain the Certificate of the Orderer Organisation admin
   ## This is necessary to successfully run the orderer
   # adminCert: hlf--ord-admincert
-  ## This should contain the CA server's TLS details under the key tls.crt (e.g. a Let's Encrypt Certificate PEM)
-  # caServerTls: ca--tls
 
 resources: {}
   ## We usually recommend not to specify default resources and to leave this as a conscious
