@@ -123,6 +123,14 @@ The volume stores the Fabric Orderer data and configurations at the `/var/hyperl
 
 The chart mounts a [Persistent Volume](http://kubernetes.io/docs/user-guide/persistent-volumes/) at this location. The volume is created using dynamic volume provisioning through a PersistentVolumeClaim managed by the chart.
 
+## Upgrading from version 1.1.x
+
+Previous versions of this chart performed enrollment with the Fabric CA directly from the pod. This prevented the possibility of using development cryptographic material (certificates and keys) from Cryptogen or the usage of other CA mechanisms.
+
+Instead, crypto-material and CA credentials are stored separately as secrets.
+
+If you used the former type of chart, you will need to obtain the relevant credentials and cryptographic material from the running pod, and save it externally to a set of secrets, whose names you will need to feed into the chart, under the `secrets.ord` section.
+
 ## Feedback and feature requests
 
 This is a work in progress and we are happy to accept feature requests. We are even happier to accept pull requests implementing improvements :-)
