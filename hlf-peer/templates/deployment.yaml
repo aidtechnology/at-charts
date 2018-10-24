@@ -30,6 +30,36 @@ spec:
         - name: dockersocket
           hostPath:
             path: /var/run/docker.sock
+        {{- if .Values.secrets.peer.cert }}
+        - name: id-cert
+          secret:
+            secretName: {{ .Values.secrets.peer.cert }}
+        {{- end }}
+        {{- if .Values.secrets.peer.key }}
+        - name: id-key
+          secret:
+            secretName: {{ .Values.secrets.peer.key }}
+        {{- end }}
+        {{- if .Values.secrets.peer.caCert }}
+        - name: cacert
+          secret:
+            secretName: {{ .Values.secrets.peer.caCert }}
+        {{- end }}
+        {{- if .Values.secrets.peer.intCaCert }}
+        - name: intcacert
+          secret:
+            secretName: {{ .Values.secrets.peer.intCaCert }}
+        {{- end }}
+        {{- if .Values.secrets.peer.tls }}
+        - name: tls
+          secret:
+            secretName: {{ .Values.secrets.peer.tls }}
+        {{- end }}
+        {{- if .Values.secrets.peer.tlsRootCert }}
+        - name: tls-rootcert
+          secret:
+          secretName: {{ .Values.secrets.peer.tlsRootCert }}
+        {{- end }}
         {{- if .Values.secrets.channel }}
         - name: channel
           secret:
