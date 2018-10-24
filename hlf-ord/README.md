@@ -94,9 +94,6 @@ The following table lists the configurable parameters of the Hyperledger Fabric 
 | `persistence.annotations`          | Persistent Volume annotations                    | `{}`                                                       |
 | `persistence.size`                 | Size of data volume (adjust for production!)     | `1Gi`                                                      |
 | `persistence.storageClass`         | Storage class of backing PVC                     | `default`                                                  |
-| `caAddress`                        | Address of CA to register/enroll with            | `hlf-ca.local`                                             |
-| `caUsername`                       | Username for registering/enrolling with CA       | `ord1`                                                     |
-| `caPassword`                       | Password for registering/enrolling with CA       | Random 24 alphanumeric characters                          |
 | `ord.hlfToolsVersion`              | Version of Hyperledger Fabric tools used         | `1.1.0`                                                    |
 | `ord.type`                         | Type of Orderer (`solo` or `kafka`)              | `solo`                                                     |
 | `ord.mspID`                        | ID of MSP the Orderer belongs to                 | `OrdererMSP`                                               |
