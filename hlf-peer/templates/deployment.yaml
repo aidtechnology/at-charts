@@ -97,8 +97,6 @@ spec:
               echo ">\033[0;35m peer node start \033[0m"
               peer node start
           envFrom:
-            - secretRef:
-                name: {{ include "hlf-peer.fullname" . }}
             {{- if eq .Values.peer.databaseType "CouchDB" }}
             - secretRef:
                 name: {{ .Values.peer.couchdbInstance }}-hlf-couchdb
