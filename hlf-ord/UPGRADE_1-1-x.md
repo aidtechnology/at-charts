@@ -30,7 +30,7 @@ kubectl -n ${NAMESPACE} create secret generic hlf--${RELEASE}-cred --from-litera
 Get content of certificate file and save it as a secret:
 
 ```
-export CONTENT=$(kubectl -n ${NAMESPACE} exec $POD_NAME -- cat /var/hyperledger/msp/signcerts/cert.pem)
+export CONTENT=$(kubectl -n ${NAMESPACE} exec ${POD_NAME} -- cat /var/hyperledger/msp/signcerts/cert.pem)
 kubectl -n ${NAMESPACE} create secret generic hlf--${RELEASE}-idcert --from-literal=cert.pem=$CONTENT
 ```
 
@@ -39,7 +39,7 @@ kubectl -n ${NAMESPACE} create secret generic hlf--${RELEASE}-idcert --from-lite
 Get content of key file and save it as a secret:
 
 ```
-export CONTENT=$(kubectl -n ${NAMESPACE} exec $POD_NAME -- bash -c 'cat /var/hyperledger/msp/keystore/*_sk')
+export CONTENT=$(kubectl -n ${NAMESPACE} exec ${POD_NAME} -- bash -c 'cat /var/hyperledger/msp/keystore/*_sk')
 kubectl -n ${NAMESPACE} create secret generic hlf--${RELEASE}-idkey --from-literal=key.pem=$CONTENT
 ```
 
@@ -48,7 +48,7 @@ kubectl -n ${NAMESPACE} create secret generic hlf--${RELEASE}-idkey --from-liter
 Get content of key file and save it as a secret:
 
 ```
-export CONTENT=$(kubectl -n ${NAMESPACE} exec $POD_NAME -- bash -c 'cat /var/hyperledger/msp/cacerts/*.pem')
+export CONTENT=$(kubectl -n ${NAMESPACE} exec ${POD_NAME} -- bash -c 'cat /var/hyperledger/msp/cacerts/*.pem')
 kubectl -n ${NAMESPACE} create secret generic hlf--${RELEASE}-cacert --from-literal=cacert.pem=$CONTENT
 ```
 
@@ -57,7 +57,7 @@ kubectl -n ${NAMESPACE} create secret generic hlf--${RELEASE}-cacert --from-lite
 Get content of key file and save it as a secret (if you have used an intermediate CA):
 
 ```
-export CONTENT=$(kubectl -n ${NAMESPACE} exec $POD_NAME -- bash -c 'cat /var/hyperledger/msp/intermediatecerts/*.pem')
+export CONTENT=$(kubectl -n ${NAMESPACE} exec ${POD_NAME} -- bash -c 'cat /var/hyperledger/msp/intermediatecerts/*.pem')
 kubectl -n ${NAMESPACE} create secret generic hlf--${RELEASE}-intcacert --from-literal=intermediatecacert.pem=$CONTENT
 ```
 
@@ -66,7 +66,7 @@ kubectl -n ${NAMESPACE} create secret generic hlf--${RELEASE}-intcacert --from-l
 We can move the crypto material we created earlier to another directory in our Persistent Volume, so we can rollback if needed.
 
 ```
-kubectl -n ${NAMESPACE} exec $POD_NAME -- mv /var/hyperledger/msp /var/hyperledger/msp_old
+kubectl -n ${NAMESPACE} exec ${POD_NAME} -- mv /var/hyperledger/msp /var/hyperledger/msp_old
 ```
 
 ## Upgrade the chart
@@ -80,7 +80,7 @@ secrets:
     cert: hlf--ord1-idcert
     key: hlf--ord1-idkey
     caCert: hlf--ord1-cacert
-    intCaCert: hlf--ord1-caintcert
+    intCaCert: hlf--ord1-caintcert  # If applicable
 ```
 
 And running:
