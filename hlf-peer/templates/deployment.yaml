@@ -105,9 +105,9 @@ spec:
               export CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=$COUCHDB_USER
               export CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=$COUCHDB_PASSWORD
 
-              while [ ! -d /hl_config/admin/admincerts ] || [ -z "$(ls -A /hl_config/admin/admincerts)" ];
+              while [ ! -d /var/hyperledger/admin_msp/admincerts ] || [ -z "$(ls -A /var/hyperledger/admin_msp/admincerts)" ];
               do
-                echo "\033[0;31m /hl_config/admin/admincerts must contain Peer admin certificates files \033[0m"
+                echo "\033[0;31m /var/hyperledger/admin_msp/admincerts must contain Peer admin certificates files \033[0m"
                 sleep 60
               done
 
