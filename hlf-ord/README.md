@@ -54,7 +54,7 @@ $ helm install stable/hlf-ord --name ord1 --set caUsername=ord1,caPassword=secre
 
 The above command specifies (but does not register/enroll) an Orderer username of `ord1` with password `secretpassword`.
 
-Alternatively, a YAML file can be provided while installing the chart. This file specifies values to override those provided in the defualt values.yaml. For example,
+Alternatively, a YAML file can be provided while installing the chart. This file specifies values to override those provided in the default values.yaml. For example,
 
 ```bash
 $ helm install stable/hlf-ord --name ord1 -f my-values.yaml
@@ -100,9 +100,18 @@ The following table lists the configurable parameters of the Hyperledger Fabric 
 | `ord.hlfToolsVersion`              | Version of Hyperledger Fabric tools used         | `1.1.0`                                                    |
 | `ord.type`                         | Type of Orderer (`solo` or `kafka`)              | `solo`                                                     |
 | `ord.mspID`                        | ID of MSP the Orderer belongs to                 | `OrdererMSP`                                               |
-| `secrets.genesis`                  | Secret containing Genesis Block for orderer      | `hlf--genesis`                                             |
-| `secrets.adminCert`                | Secret containing Orderer Org admin certificate  | `hlf--ord-admincert`                                       |
-| `secrets.caServerTls`              | Secret containing CA Server TLS certificate      | `ca--tls`                                                  |
+| `ord.tls.server.enabled`           | Do we enable server-side TLS?                    | `false`                                                    |
+| `ord.tls.client.enabled`           | Do we enable client-side TLS?                    | `false`                                                    |
+| `secrets.ord.cred`                 | Credentials: 'CA_USERNAME' and 'CA_PASSWORD'     | ``                                                         |
+| `secrets.ord.cert`                 | Certificate: as 'cert.pem'                       | ``                                                         |
+| `secrets.ord.key`                  | Private key: as 'key.pem'                        | ``                                                         |
+| `secrets.ord.caCert`               | CA Cert: as 'cacert.pem'                         | ``                                                         |
+| `secrets.ord.intCaCert`            | Int. CA Cert: as 'intermediatecacert.pem'        | ``                                                         |
+| `secrets.ord.tls`                  | TLS secret: as 'tls.crt' and 'tls.key'           | ``                                                         |
+| `secrets.ord.tlsRootCert`          | TLS root CA certificate: as 'cert.pem'           | ``                                                         |
+| `secrets.genesis`                  | Secret containing Genesis Block for orderer      | ``                                                         |
+| `secrets.adminCert`                | Secret containing Orderer Org admin certificate  | ``                                                         |
+| `secrets.caServerTls`              | Secret containing CA Server TLS certificate      | ``                                                         |
 | `resources`                        | CPU/Memory resource requests/limits              | `{}`                                                       |
 | `nodeSelector`                     | Node labels for pod assignment                   | `{}`                                                       |
 | `tolerations`                      | Toleration labels for pod assignment             | `[]`                                                       |
