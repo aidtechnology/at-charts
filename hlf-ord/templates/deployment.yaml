@@ -111,8 +111,6 @@ spec:
               echo ">\033[0;35m orderer \033[0m"
               orderer
           envFrom:
-            - secretRef:
-                name: {{ include "hlf-ord.fullname" . }}
             {{- if .Values.secrets.ord.cred }}
             - secretRef:
                 # Environmental variables CA_USERNAME and CA_PASSWORD
@@ -166,10 +164,6 @@ spec:
               name: admin-cert
             - mountPath: /var/hyperledger/msp/admincerts
               name: admin-cert
-            {{- end }}
-            {{- if .Values.secrets.caServerTls }}
-            - mountPath: /hl_config/ca_server/tls
-              name: ca-server-tls
             {{- end }}
           resources:
 {{ toYaml .Values.resources | indent 12 }}
