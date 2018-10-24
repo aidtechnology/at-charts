@@ -131,6 +131,8 @@ Instead, crypto-material and CA credentials are stored separately as secrets.
 
 If you used the former type of chart, you will need to obtain the relevant credentials and cryptographic material from the running pod, and save it externally to a set of secrets, whose names you will need to feed into the chart, under the `secrets.ord` section.
 
+An example upgrade procedure is described in `UPGRADE_1-1-x.md`
+
 ## Feedback and feature requests
 
 This is a work in progress and we are happy to accept feature requests. We are even happier to accept pull requests implementing improvements :-)
