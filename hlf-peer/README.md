@@ -18,7 +18,8 @@ This Peer can receive transaction requests, which it checks and signs, endorsing
 
 - Kubernetes 1.9+
 - PV provisioner support in the underlying infrastructure.
-- Three K8S secrets containing:
+- K8S secrets containing:
+    - the crypto-materials (e.g. signcert, key, cacert, and optionally intermediatecert, CA credentials)
     - the channel transaction for the Peer
     - the certificate of the Peer Organisation Admin
     - the private key of the Peer Organisation Admin (needed to join the channel)
@@ -39,10 +40,8 @@ The command deploys the Hyperledger Fabric Peer on the Kubernetes cluster in the
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example:
 
 ```bash
-$ helm install stable/hlf-peer --name peer1 --set caUsername=peer1,caPassword=secretpassword
+$ helm install stable/hlf-peer --name peer1 --set peer.mspID=MyMSP
 ```
-
-The above command specifies (but does not register/enroll) a Peer username of `peer1` with password `secretpassword`.
 
 Alternatively, a YAML file can be provided while installing the chart. This file specifies values to override those provided in the default values.yaml. For example,
 
@@ -52,11 +51,10 @@ $ helm install stable/hlf-peer --name peer1 -f my-values.yaml
 
 ## Updating the chart
 
-When updating the chart, make sure you provide the `caPassword`, otherwise `helm update` will generate a new random (and invalid) password.
+To update the chart:
 
 ```bash
-$ export CA_PASSWORD=$(kubectl get secret --namespace {{ .Release.Namespace }} peer1-hlf-peer -o jsonpath="{.data.CA_PASSWORD}" | base64 --decode; echo)
-$ helm upgrade peer1 stable/hlf-peer --set caPassword=$CA_PASSWORD
+$ helm upgrade peer1 stable/hlf-peer -f my-values.yaml
 ```
 
 ## Uninstalling the Chart
@@ -110,6 +108,16 @@ The following table lists the configurable parameters of the Hyperledger Fabric 
 The volume stores the Fabric Peer data and configurations at the `/var/hyperledger` path of the container.
 
 The chart mounts a [Persistent Volume](http://kubernetes.io/docs/user-guide/persistent-volumes/) at this location. The volume is created using dynamic volume provisioning through a PersistentVolumeClaim managed by the chart.
+
+## Upgrading from version 1.1.x
+
+Previous versions of this chart performed enrollment with the Fabric CA directly from the pod. This prevented the possibility of using development cryptographic material (certificates and keys) from Cryptogen or the usage of other CA mechanisms.
+
+Instead, crypto-material and CA credentials are stored separately as secrets.
+
+If you used the former type of chart, you will need to obtain the relevant credentials and cryptographic material from the running pod, and save it externally to a set of secrets, whose names you will need to feed into the chart, under the `secrets.ord` section.
+
+An example upgrade procedure is described in `UPGRADE_1-1-x.md`
 
 ## Feedback and feature requests
 

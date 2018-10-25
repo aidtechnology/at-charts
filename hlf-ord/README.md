@@ -29,7 +29,8 @@ Learn more about deploying a production ready consensus framework based on Apach
 
 - Kubernetes 1.9+
 - PV provisioner support in the underlying infrastructure.
-- Two K8S secrets containing:
+- K8S secrets containing:
+    - the crypto-materials (e.g. signcert, key, cacert, and optionally intermediatecert, CA credentials)
     - the genesis block for the Orderer
     - the certificate of the Orderer Organisation Admin
 - A running [Kafka Chart](https://github.com/kubernetes/charts/tree/master/incubator/kafka) if you are using the `kafka` consensus mechanism.
@@ -49,10 +50,8 @@ The command deploys the Hyperledger Fabric Orderer on the Kubernetes cluster in 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example:
 
 ```bash
-$ helm install stable/hlf-ord --name ord1 --set caUsername=ord1,caPassword=secretpassword
+$ helm install stable/hlf-ord --name ord1 --set ord.mspID=MyMSP
 ```
-
-The above command specifies (but does not register/enroll) an Orderer username of `ord1` with password `secretpassword`.
 
 Alternatively, a YAML file can be provided while installing the chart. This file specifies values to override those provided in the default values.yaml. For example,
 
@@ -62,11 +61,10 @@ $ helm install stable/hlf-ord --name ord1 -f my-values.yaml
 
 ## Updating the chart
 
-When updating the chart, make sure you provide the `caPassword`, otherwise `helm update` will generate a new random (and invalid) password.
+To update the chart run:
 
 ```bash
-$ export CA_PASSWORD=$(kubectl get secret --namespace {{ .Release.Namespace }} ord1-hlf-ord -o jsonpath="{.data.CA_PASSWORD}" | base64 --decode; echo)
-$ helm upgrade ord1 stable/hlf-ord --set caPassword=$CA_PASSWORD
+$ helm upgrade ord1 stable/hlf-ord -f my-values.yaml
 ```
 
 ## Uninstalling the Chart
