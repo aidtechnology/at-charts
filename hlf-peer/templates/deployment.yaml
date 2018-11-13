@@ -58,7 +58,7 @@ spec:
         {{- if .Values.secrets.peer.tlsRootCert }}
         - name: tls-rootcert
           secret:
-          secretName: {{ .Values.secrets.peer.tlsRootCert }}
+            secretName: {{ .Values.secrets.peer.tlsRootCert }}
         {{- end }}
         {{- if .Values.secrets.channel }}
         - name: channel
@@ -75,15 +75,10 @@ spec:
           secret:
             secretName: {{ .Values.secrets.adminKey }}
         {{- end }}
-        {{- if .Values.secrets.caPeerServerTls }}
-        - name: ca-peer-server-tls
+        {{- if .Values.secrets.ordTlsRootCert }}
+        - name: ord-tls-rootcert
           secret:
-            secretName: {{ .Values.secrets.caPeerServerTls }}
-        {{- end }}
-        {{- if .Values.secrets.caOrdServerTls }}
-        - name: ca-ord-server-tls
-          secret:
-            secretName: {{ .Values.secrets.caOrdServerTls }}
+            secretName: {{ .Values.secrets.ordTlsRootCert }}
         {{- end }}
       containers:
         - name: peer
@@ -159,12 +154,16 @@ spec:
               name: intcacert
             {{- end }}
             {{- if .Values.secrets.peer.tls }}
-            - mountPath: /var/hyperledger/msp_tls
+            - mountPath: /var/hyperledger/tls_peer
               name: tls
             {{- end }}
             {{- if .Values.secrets.peer.tlsRootCert }}
-            - mountPath: /var/hyperledger/msp_tls
+            - mountPath: /var/hyperledger/tls_ca
               name: tls-rootcert
+            {{- end }}
+            {{- if .Values.secrets.ordTlsRootCert }}
+            - mountPath: /var/hyperledger/ord_tls
+              name: ord-tls-rootcert
             {{- end }}
             {{- if .Values.secrets.channel }}
             - mountPath: /hl_config/channel

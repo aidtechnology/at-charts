@@ -70,6 +70,8 @@ secrets:
   ## This should contain the Private Key of the Peer Organisation admin
   ## This is necessary to successfully join a channel
   # adminKey: hlf--peer-adminkey
+  ## This should include the Orderer TLS 'cacert.pem'
+  # ordTlsRootCert: hlf--ord-tlsrootcert
 
 resources: {}
   ## We usually recommend not to specify default resources and to leave this as a conscious

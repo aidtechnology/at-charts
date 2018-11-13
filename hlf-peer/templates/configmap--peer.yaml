@@ -26,13 +26,13 @@ data:
   CORE_LOGGING_POLICIES: debug
   CORE_LOGGING_GRPC: debug
   CORE_PEER_TLS_ENABLED: {{ .Values.peer.tls.server.enabled | quote }}
-  CORE_PEER_TLS_CERT_FILE: "/var/hyperledger/tls/tls.crt"
-  CORE_PEER_TLS_KEY_FILE: "/var/hyperledger/tls/tls.key"
-  CORE_PEER_TLS_ROOTCERT_FILE: "/var/hyperledger/msp_tls/cert.pem"
+  CORE_PEER_TLS_CERT_FILE: "/var/hyperledger/tls_peer/tls.crt"
+  CORE_PEER_TLS_KEY_FILE: "/var/hyperledger/tls_peer/tls.key"
+  CORE_PEER_TLS_ROOTCERT_FILE: "/var/hyperledger/tls_ca/cacert.pem"
   CORE_PEER_TLS_CLIENTAUTHREQUIRED: {{ .Values.peer.tls.client.enabled | quote }}
-  CORE_PEER_TLS_CLIENTROOTCAS_FILES: "/var/hyperledger/msp_tls/cert.pem"
-  CORE_PEER_TLS_CLIENTCERT_FILE: "/var/hyperledger/tls/tls.crt"
-  CORE_PEER_TLS_CLIENTKEY_FILE: "/var/hyperledger/tls/tls.key"
+  CORE_PEER_TLS_CLIENTROOTCAS_FILES: "/var/hyperledger/tls_ca/cacert.pem"
+  CORE_PEER_TLS_CLIENTCERT_FILE: "/var/hyperledger/tls_peer/tls.crt"
+  CORE_PEER_TLS_CLIENTKEY_FILE: "/var/hyperledger/tls_peer/tls.key"
   CORE_LEDGER_STATE_STATEDATABASE: {{ .Values.peer.databaseType | quote }}
   # Containers in the same pod share the host
   {{- if eq .Values.peer.databaseType "CouchDB" }}
@@ -43,3 +43,4 @@ data:
   GODEBUG: "netdns=go"
   ADMIN_MSP_PATH: /var/hyperledger/admin_msp
   ORD_MSP_PATH: /var/hyperledger/ord_msp
+  ORD_TLS_PATH: /var/hyperledger/ord_tls
