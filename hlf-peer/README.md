@@ -83,6 +83,11 @@ The following table lists the configurable parameters of the Hyperledger Fabric 
 | `persistence.annotations`          | Persistent Volume annotations                        | `{}`                                                       |
 | `persistence.size`                 | Size of data volume (adjust for production!)         | `1Gi`                                                      |
 | `persistence.storageClass`         | Storage class of backing PVC                         | `default`                                                  |
+| `ingress.enabled`                  | If true, Ingress will be created                     | `false`                                                    |
+| `ingress.annotations`              | Ingress annotations                                  | `{}`                                                       |
+| `ingress.path`                     | Ingress path                                         | `/`                                                        |
+| `ingress.hosts`                    | Ingress hostnames                                    | `[]`                                                       |
+| `ingress.tls`                      | Ingress TLS configuration                            | `[]`                                                       |
 | `peer.databaseType`                | Database type to use (`goleveldb` or `CouchDB`)      | `goleveldb`                                                |
 | `peer.couchdbInstance              | CouchDB chart name to use `cdb-peer1`                | `cdb-peer1`                                                |
 | `peer.mspID`                       | ID of MSP the Peer belongs to                        | `Org1MSP`                                                  |
