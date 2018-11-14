@@ -101,7 +101,20 @@ spec:
             - name: event
               containerPort: 7053
               protocol: TCP
-          # TODO: Add liveness and readiness probes
+          livenessProbe:
+            exec:
+              command:
+              - ls
+              - /var/hyperledger
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          # TODO: Improve readiness probe (ideally `ps aux | awk '$11=="orderer"'`)
+          readinessProbe:
+            exec:
+              command:
+              - ls
+              - /var/hyperledger
+            initialDelaySeconds: 15
           command:
             - bash
             - -c
