@@ -60,7 +60,11 @@ secrets:
     ## TLS secret, saved under keys 'tls.crt' and 'tls.key' (to conform with K8S nomenclature)
     # tls: hlf--peer1-tls
     ## TLS root CA certificate saved under key 'cert.pem'
-    # tlsRootCert: hlf--peer1-tlsrootcert
+    # tlsRootCert: hlf--peer-tlsrootcert
+    ## TLS client root CA certificates saved under any names (as there may be multiple)
+    # tlsClient: hlf--peer1-tls
+    ## TLS client root CA certificates saved under any names (as there may be multiple)
+    # tlsClientRootCerts: hlf--ord-tlsrootcert
   ## This should contain "channel" transaction derived from a configtx.yaml
   ## configtxgen -profile ComposerChannel -channelID composerchannel -outputCreateChannelTx composerchannel.tx
   # channel: hlf--channel
@@ -70,6 +74,8 @@ secrets:
   ## This should contain the Private Key of the Peer Organisation admin
   ## This is necessary to successfully join a channel
   # adminKey: hlf--peer-adminkey
+  ## This should include the Orderer TLS 'cacert.pem'
+  # ordTlsRootCert: hlf--ord-tlsrootcert
 
 resources: {}
   ## We usually recommend not to specify default resources and to leave this as a conscious
