@@ -57,6 +57,11 @@ spec:
           secret:
             secretName: {{ .Values.secrets.ord.tlsRootCert }}
         {{- end }}
+        {{- if .Values.secrets.ord.tlsClientRootCert }}
+        - name: tls-clientrootcert
+          secret:
+            secretName: {{ .Values.secrets.ord.tlsClientRootCert }}
+        {{- end }}
         {{- if .Values.secrets.genesis }}
         - name: genesis
           secret:
@@ -82,7 +87,7 @@ spec:
               protocol: TCP
           # TODO: Add liveness and readiness probes
           command:
-            - sh
+            - bash
             - -c
             - |
 
@@ -107,6 +112,11 @@ spec:
               echo "\033[0;32m Create ${ORDERER_FILELEDGER_LOCATION} directory to avoid restarts \033[0m"
               mkdir -p ${ORDERER_FILELEDGER_LOCATION}
               mkdir -p ${ORDERER_FILELEDGER_LOCATION}/index
+
+              if [ $ORDERER_GENERAL_TLS_CLIENTAUTHREQUIRED ]
+              then
+                export ORDERER_GENERAL_TLS_CLIENTROOTCAS=$(echo $(ls $ORDERER_GENERAL_TLS_CLIENTROOTCAS) | echo "[$(sed 's/ /,/g')]")
+              fi
 
               echo ">\033[0;35m orderer \033[0m"
               orderer
@@ -142,12 +152,16 @@ spec:
               name: intcacert
             {{- end }}
             {{- if .Values.secrets.ord.tls }}
-            - mountPath: /var/hyperledger/tls_ord
+            - mountPath: /var/hyperledger/tls/server/pair
               name: tls
             {{- end }}
             {{- if .Values.secrets.ord.tlsRootCert }}
-            - mountPath: /var/hyperledger/tls_ca
+            - mountPath: /var/hyperledger/tls/server/cert
               name: tls-rootcert
+            {{- end }}
+            {{- if .Values.secrets.ord.tlsClientRootCert }}
+            - mountPath: /var/hyperledger/tls/client/cert
+              name: tls-clientrootcert
             {{- end }}
             {{- if .Values.secrets.genesis }}
             - mountPath: /hl_config/genesis

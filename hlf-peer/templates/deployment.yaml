@@ -60,6 +60,16 @@ spec:
           secret:
             secretName: {{ .Values.secrets.peer.tlsRootCert }}
         {{- end }}
+        {{- if .Values.secrets.peer.tlsClient }}
+        - name: tls-client
+          secret:
+            secretName: {{ .Values.secrets.peer.tlsClient }}
+        {{- end }}
+        {{- if .Values.secrets.peer.tlsClientRootCert }}
+        - name: tls-clientrootcert
+          secret:
+            secretName: {{ .Values.secrets.peer.tlsClientRootCert }}
+        {{- end }}
         {{- if .Values.secrets.channel }}
         - name: channel
           secret:
@@ -93,7 +103,7 @@ spec:
               protocol: TCP
           # TODO: Add liveness and readiness probes
           command:
-            - sh
+            - bash
             - -c
             - |
               # To avoid having separate secrets for CouchDB and HLF
@@ -117,6 +127,11 @@ spec:
                 mkdir -p ${FABRIC_CFG_PATH}
                 cp -r /etc/hyperledger/fabric/core.yaml ${FABRIC_CFG_PATH}
                 ls ${FABRIC_CFG_PATH}
+              fi
+
+              if [ $CORE_PEER_TLS_CLIENTAUTHREQUIRED ]
+              then
+                export CORE_PEER_TLS_CLIENTROOTCAS_FILES=$(ls -d $CORE_PEER_TLS_CLIENTROOTCAS_FILES)
               fi
 
               echo ">\033[0;35m peer node start \033[0m"
@@ -154,15 +169,23 @@ spec:
               name: intcacert
             {{- end }}
             {{- if .Values.secrets.peer.tls }}
-            - mountPath: /var/hyperledger/tls_peer
+            - mountPath: /var/hyperledger/tls/server/pair
               name: tls
             {{- end }}
             {{- if .Values.secrets.peer.tlsRootCert }}
-            - mountPath: /var/hyperledger/tls_ca
+            - mountPath: /var/hyperledger/tls/server/cert
               name: tls-rootcert
             {{- end }}
+            {{- if .Values.secrets.peer.tlsClient }}
+            - mountPath: /var/hyperledger/tls/client/pair
+              name: tls-client
+            {{- end }}
+            {{- if .Values.secrets.peer.tlsClientRootCert }}
+            - mountPath: /var/hyperledger/tls/client/cert
+              name: tls-clientrootcert
+            {{- end }}
             {{- if .Values.secrets.ordTlsRootCert }}
-            - mountPath: /var/hyperledger/ord_tls
+            - mountPath: /var/hyperledger/tls/ord/cert
               name: ord-tls-rootcert
             {{- end }}
             {{- if .Values.secrets.channel }}
