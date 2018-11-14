@@ -43,6 +43,4 @@ data:
   FABRIC_CFG_PATH: /var/hyperledger/fabric_cfg
   GODEBUG: "netdns=go"
   ADMIN_MSP_PATH: /var/hyperledger/admin_msp
-  # TODO: We can probably get rid of this env-var later
-  ORD_MSP_PATH: /var/hyperledger/ord_msp
   ORD_TLS_PATH: /var/hyperledger/tls/ord/cert
