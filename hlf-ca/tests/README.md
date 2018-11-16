@@ -63,3 +63,13 @@ Enroll the Organisation Admin identity (typically we would use a more secure pas
 Check that the new identity is present in the Intermediate CA
 
     kubectl exec -n test $ICA_POD -- fabric-ca-client identity list --id org-admin
+
+### Cleanup
+
+Delete charts we installed
+
+    helm delete --purge ica rca
+
+Currently, the Persistent Volume Claim for the PostgreSQL database does not get deleted automatically.
+
+    kubectl -n test delete pvc data-rca-postgresql-0
