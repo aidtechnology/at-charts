@@ -10,31 +10,31 @@ Commands should be run from the root folder of the repository.
 
 #### Peer Org admin
 
-    ORG_CERT=$(ls ./EXTRA/crypto-config/peerOrganizations/test.svc.cluster.local/users/Admin@test.svc.cluster.local/msp/admincerts/*.pem)
+    ORG_CERT=$(ls ./hlf-peer/tests/fixtures/crypto/admin/*.pem)
 
     kubectl create secret generic -n test hlf--peer-admincert --from-file=cert.pem=$ORG_CERT
 
-    ORG_KEY=$(ls ./EXTRA/crypto-config/peerOrganizations/test.svc.cluster.local/users/Admin@test.svc.cluster.local/msp/keystore/*_sk)
+    ORG_KEY=$(ls ./hlf-peer/tests/fixtures/crypto/admin/*_sk)
 
     kubectl create secret generic -n test hlf--peer-adminkey --from-file=key.pem=$ORG_KEY
 
-    CA_CERT=$(ls ./EXTRA/crypto-config/peerOrganizations/test.svc.cluster.local/users/Admin@test.svc.cluster.local/msp/cacerts/*.pem)
+    CA_CERT=$(ls ./hlf-peer/tests/fixtures/crypto/ca/*.pem)
 
     kubectl create secret generic -n test hlf--peer-cacert --from-file=cacert.pem=$CA_CERT
 
 #### Peer node
 
-    NODE_CERT=$(ls ./EXTRA/crypto-config/peerOrganizations/test.svc.cluster.local/peers/peer0-hlf-peer.test.svc.cluster.local/msp/signcerts/*.pem)
+    NODE_CERT=$(ls ./hlf-peer/tests/fixtures/crypto/peer/*.pem)
 
     kubectl create secret generic -n test hlf--peer0-idcert --from-file=cert.pem=$NODE_CERT
 
-    NODE_KEY=$(ls ./EXTRA/crypto-config/peerOrganizations/test.svc.cluster.local/peers/peer0-hlf-peer.test.svc.cluster.local/msp/keystore/*_sk)
+    NODE_KEY=$(ls ./hlf-peer/tests/fixtures/crypto/peer/*_sk)
 
     kubectl create secret generic -n test hlf--peer0-idkey --from-file=key.pem=$NODE_KEY
 
 #### Genesis block
 
-    kubectl create secret generic -n test hlf--channel --from-file=./EXTRA/mychannel.tx
+    kubectl create secret generic -n test hlf--channel --from-file=./hlf-peer/tests/fixtures/crypto/mychannel.tx
 
 ### Install
 
