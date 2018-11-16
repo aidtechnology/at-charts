@@ -49,3 +49,7 @@ Check that server is running
 Delete charts we installed
 
     helm delete --purge ord0
+
+Delete the secrets we created
+
+    kubectl -n test delete secret hlf--ord-admincert hlf--ord-cacert hlf--ord0-idcert hlf--ord0-idkey hlf--genesis
