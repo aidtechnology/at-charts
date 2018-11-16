@@ -71,8 +71,9 @@ postgresql:
   # To use an external database set this to false and configure the externalDatabase parameters, specifying the type to 'postgres'
   enabled: false
   image:
-      registry: "bitnami/postgresql"
-      tag: "10.6.0"
+    registry: docker.io
+    repository: "bitnami/postgresql"
+    tag: "10.6.0"
   postgresqlDatabase: fabric_ca
   postgresqlUsername: fabric_ca
 

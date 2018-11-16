@@ -99,7 +99,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: {{ template "postgresql.fullname" . }}
-                  key: postgres-password
+                  key: postgresql-password
             {{- end }}
             {{- if .Values.mysql.enabled }}
             # MySQL Database
