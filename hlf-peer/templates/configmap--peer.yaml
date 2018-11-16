@@ -7,7 +7,12 @@ metadata:
 data:
   CORE_PEER_ADDRESSAUTODETECT: "true"
   CORE_PEER_NETWORKID: nid1
+  # If we have an ingress, we set hostname to it
+  {{- if .Values.ingress.enabled }}
+  CORE_PEER_ADDRESS: {{ index .Values.ingress.hosts 0 }}:443
+  {{- else }}
   CORE_PEER_ADDRESS: {{ include "hlf-peer.fullname" . }}:7051
+  {{- end }}
   CORE_PEER_LISTENADDRESS: 0.0.0.0:7051
   CORE_PEER_EVENTS_ADDRESS: 0.0.0.0:7053
   CORE_PEER_COMMITTER_ENABLED: "true"

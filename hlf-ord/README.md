@@ -88,6 +88,11 @@ The following table lists the configurable parameters of the Hyperledger Fabric 
 | `image.pullPolicy`                 | Image pull policy                                | `IfNotPresent`                                             |
 | `service.port`                     | TCP port                                         | `7050`                                                     |
 | `service.type`                     | K8S service type exposing ports, e.g. `ClusterIP`| `ClusterIP`                                                |
+| `ingress.enabled`                  | If true, Ingress will be created                 | `false`                                                    |
+| `ingress.annotations`              | Ingress annotations                              | `{}`                                                       |
+| `ingress.path`                     | Ingress path                                     | `/`                                                        |
+| `ingress.hosts`                    | Ingress hostnames                                | `[]`                                                       |
+| `ingress.tls`                      | Ingress TLS configuration                        | `[]`                                                       |
 | `persistence.accessMode`           | Use volume as ReadOnly or ReadWrite              | `ReadWriteOnce`                                            |
 | `persistence.annotations`          | Persistent Volume annotations                    | `{}`                                                       |
 | `persistence.size`                 | Size of data volume (adjust for production!)     | `1Gi`                                                      |

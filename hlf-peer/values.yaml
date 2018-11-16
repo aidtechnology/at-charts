@@ -13,6 +13,21 @@ service:
   portRequest: 7051
   portEvent: 7053
 
+ingress:
+  enabled: false
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    # nginx.ingress.kubernetes.io/backend-protocol: "GRPC"
+    # certmanager.k8s.io/cluster-issuer: "letsencrypt-staging"
+  path: /
+  hosts:
+    - hlf-peer.local
+  tls: []
+  #  - secretName: hlf-peer-tls
+  #    hosts:
+  #      - hlf-peer.local
+
 persistence:
   enabled: true
   annotations: {}
