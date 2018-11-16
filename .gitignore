@@ -1,3 +1,7 @@
+# Python environment
+venv
+.envrc
+
 # JetBrains
 .idea
 
