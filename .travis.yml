@@ -1,0 +1,5 @@
+addons:
+  sonarcloud:
+    organization: "aidtechnology"
+script:
+  - sonar-scanner
