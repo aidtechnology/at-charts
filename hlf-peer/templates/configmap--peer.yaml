@@ -6,6 +6,7 @@ metadata:
 {{ include "labels.standard" . | indent 4 }}
 data:
   CORE_PEER_ADDRESSAUTODETECT: "true"
+  CORE_PEER_ID: {{ .Release.Name }}
   CORE_PEER_NETWORKID: nid1
   # If we have an ingress, we set hostname to it
   {{- if .Values.ingress.enabled }}
