@@ -6,6 +6,9 @@ CHART_LIST=(hl-composer hlf-ca hlf-couchdb hlf-ord hlf-peer)
 # Helm   #
 ##########
 
+# Initialise helm on client side only
+helm init --client-only
+
 for CHART in ${CHART_LIST[*]}
 do
     HELM_LINT=$(helm lint ./${CHART} | grep "no failures")
