@@ -2,6 +2,8 @@ addons:
   sonarcloud:
     organization: "aidtechnology"
 script:
+  # Integration testing
+  - pytest . -s
   - sonar-scanner
 after_success:
   - curl -Lo /tmp/helm.tar.gz https://kubernetes-helm.storage.googleapis.com/helm-${HELM_VERSION}-linux-amd64.tar.gz
