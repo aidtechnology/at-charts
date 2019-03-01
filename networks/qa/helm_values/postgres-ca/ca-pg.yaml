@@ -1,0 +1,16 @@
+imageTag: "9.6.2"
+
+# postgresPassword:
+postgresDatabase: fabric_ca
+
+persistence:
+  enabled: true
+  size: 1Gi
+
+affinity:
+  podAntiAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      - topologyKey: "kubernetes.io/hostname"
+        labelSelector:
+          matchLabels:
+            app: postgresql
