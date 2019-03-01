@@ -29,7 +29,6 @@ do
         else
             helm dependency build ./${CHART}
             helm package ./${CHART}
-            curl --data-binary "@$CHART-$CHART_VERSION.tgz" https://${CHARTMUSEUM_URL}/api/charts --user ${CHARTMUSEUM_USER}:${CHARTMUSEUM_PASS}
         fi
     fi
 done

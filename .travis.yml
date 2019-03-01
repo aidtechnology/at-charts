@@ -48,7 +48,8 @@ before_script:
 
 script:
   # Integration testing
+  - bash ./package.sh
   - pytest . -s
   - sonar-scanner
 after_success:
-  - bash ./package.sh
+  - bash ./chart_museum.sh
