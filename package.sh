@@ -20,15 +20,7 @@ do
         exit 126
     else
         echo "Helm linting suceeded for $CHART"
-        CHART_VERSION=$(cat ./${CHART}/Chart.yaml | grep version | awk '{print $2}')
-        echo "Chart version is $CHART_VERSION"
-        CHART_MISSING=$(curl https://${CHARTMUSEUM_URL}/api/charts/${CHART}/${CHART_VERSION} --user ${CHARTMUSEUM_USER}:${CHARTMUSEUM_PASS} | grep error)
-        if [[ -z "$CHART_MISSING" ]]
-        then
-            echo "Chart already saved to Chart Museum"
-        else
-            helm dependency build ./${CHART}
-            helm package ./${CHART}
-        fi
+        helm dependency build ./${CHART}
+        helm package ./${CHART}
     fi
 done
