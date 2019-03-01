@@ -1,3 +1,6 @@
+# Python
+**/__pycache__/**
+
 # Python environment
 venv
 .envrc
@@ -7,3 +10,6 @@ venv
 
 # Packages
 *.tgz
+
+# Crypto
+**/crypto/**
