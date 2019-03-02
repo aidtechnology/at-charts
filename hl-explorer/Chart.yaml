@@ -1,0 +1,19 @@
+apiVersion: v1
+description: Hyperledger Blockchain Explorer chart
+name: hl-explorer
+version: 1.0.0
+appVersion: 0.3.7
+keywords:
+  - blockchain
+  - hyperledger
+  - fabric
+  - explorer
+home: https://github.com/aidtechnology/at-charts/
+sources:
+  - https://github.com/aidtechnology/at-charts/
+maintainers:
+  - name: alexvicegrab
+    email: sasha@aid.technology
+  - name: nicolapaoli
+    email: nicola@aid.technology
+icon: https://wiki.hyperledger.org/_media/projects/hyperledger_explorer_logo_color.png

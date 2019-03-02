@@ -1,0 +1,110 @@
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: {{ include "hl-explorer.fullname" . }}
+  labels:
+{{ include "labels.standard" . | indent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ include "hl-explorer.name" . }}
+      release: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "hl-explorer.name" . }}
+        release: {{ .Release.Name }}
+    spec:
+      volumes:
+        {{- if .Values.secrets.peerAdminCert }}
+        - name: peer-admin-cert
+          secret:
+            secretName: {{ .Values.secrets.peerAdminCert }}
+        {{- end }}
+        {{- if .Values.secrets.peerAdminKey }}
+        - name: peer-admin-key
+          secret:
+            secretName: {{ .Values.secrets.peerAdminKey }}
+        {{- end }}
+        {{- if .Values.secrets.ordAdminCert }}
+        - name: ord-admin-cert
+          secret:
+            secretName: {{ .Values.secrets.ordAdminCert }}
+        {{- end }}
+        {{- if .Values.secrets.ordAdminKey }}
+        - name: ord-admin-key
+          secret:
+            secretName: {{ .Values.secrets.ordAdminKey }}
+        {{- end }}
+        {{- if .Values.secrets.hlbConnection }}
+        - name: hlb-connection
+          configMap:
+            name: {{ .Values.secrets.hlbConnection }}
+        {{- end }}
+        {{- if .Values.secrets.caServerTls }}
+        - name: ca-server-tls
+          secret:
+            secretName: {{ .Values.secrets.caServerTls }}
+        {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          # TODO: Add liveness and readiness probes
+          envFrom:
+            - configMapRef:
+                name: {{ include "hl-explorer.fullname" . }}--db
+          env:
+            # Database environmental variable
+            {{- if .Values.db.chart }}
+            - name: DATABASE_PASSWD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.db.chart | quote }}
+                  key: postgres-password
+            {{- end }}
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          volumeMounts:
+            {{- if .Values.secrets.peerAdminCert }}
+            - mountPath: /hl_config/peer/admin/signcerts
+              name: peer-admin-cert
+            {{- end }}
+            {{- if .Values.secrets.peerAdminKey }}
+            - mountPath: /hl_config/peer/admin/keystore
+              name: peer-admin-key
+            {{- end }}
+            {{- if .Values.secrets.ordAdminCert }}
+            - mountPath: /hl_config/ord/admin/signcerts
+              name: ord-admin-cert
+            {{- end }}
+            {{- if .Values.secrets.ordAdminKey }}
+            - mountPath: /hl_config/ord/admin/keystore
+              name: ord-admin-key
+            {{- end }}
+            {{- if .Values.secrets.hlbConnection }}
+            - mountPath: /opt/explorer/app/platform/fabric/config.json
+              subPath: config.json
+              name: hlb-connection
+            {{- end }}
+            {{- if .Values.secrets.caServerTls }}
+            - mountPath: /hl_config/ca_server/tls
+              name: ca-server-tls
+            {{- end }}
+          resources:
+{{ toYaml .Values.resources | indent 12 }}
+    {{- with .Values.nodeSelector }}
+      nodeSelector:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+{{ toYaml . | indent 8 }}
+    {{- end }}
