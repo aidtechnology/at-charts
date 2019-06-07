@@ -8,4 +8,6 @@ data:
   GODEBUG: "netdns=go"
   FABRIC_CA_HOME: /var/hyperledger/fabric-ca
   FABRIC_CA_SERVER_CA_NAME: {{ .Values.caName | quote }}
+  FABRIC_CA_SERVER_CA_CERTFILE: /etc/hyperledger/fabric-ca-server/ca-cert.pem
+  FABRIC_CA_SERVER_CA_KEYFILE: /etc/hyperledger/fabric-ca-server/ca-key.pem
   SERVICE_DNS: 0.0.0.0  # Point to itself
