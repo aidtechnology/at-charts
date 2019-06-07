@@ -22,10 +22,12 @@ data:
   CORE_PEER_DISCOVERY_TOUCHPERIOD: 60s
   CORE_PEER_LOCALMSPID: {{ .Values.peer.mspID | quote }}
   CORE_PEER_MSPCONFIGPATH: /var/hyperledger/msp
+  CORE_PEER_CHAINCODEADDRESS: {{ index .Values.ingress.hosts 0 }}:7052
+  CORE_PEER_CHAINCODELISTENADDRESS: 0.0.0.0:7052
   ###########
   # Logging #
   ###########
-  CORE_LOGGING_LEVEL: debug
+  FABRIC_LOGGING_SPEC: debug
   CORE_LOGGING_PEER: debug
   CORE_LOGGING_CAUTHDSL: debug
   CORE_LOGGING_GOSSIP: debug
