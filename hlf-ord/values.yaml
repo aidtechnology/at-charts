@@ -49,6 +49,8 @@ ord:
   type: solo
   ## MSP ID of the Orderer
   mspID: OrdererMSP
+  ## Orderer logging level
+  logging: debug
   # TLS
   tls:
     server:

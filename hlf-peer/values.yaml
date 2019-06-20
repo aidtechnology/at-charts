@@ -52,6 +52,8 @@ peer:
   couchdbInstance: cdb-peer1
   ## MSP ID of the Peer
   mspID: Org1MSP
+  ## Peer logging level
+  logging: debug
   gossip:
     bootstrap: ""
     endpoint: ""
