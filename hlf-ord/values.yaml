@@ -51,6 +51,10 @@ ord:
   mspID: OrdererMSP
   ## Orderer logging level
   logging: debug
+  ## Orderer Kafka Replication Factor 
+  replicationFactor: "1"
+  ## Kafka Verbose
+  verbose: "true"
   # TLS
   tls:
     server:
