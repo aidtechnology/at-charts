@@ -3,6 +3,7 @@ description: Hyperledger Fabric Peer chart (these charts are created by AID:Tech
 name: hlf-peer
 version: 1.2.7
 appVersion: 1.4.1
+
 keywords:
   - blockchain
   - hyperledger
