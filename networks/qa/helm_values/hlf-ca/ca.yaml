@@ -1,5 +1,4 @@
-image:
-  tag: 1.4.1
+
 
 ingress:
   enabled: true

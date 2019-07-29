@@ -12,8 +12,8 @@ CURRENT_PATH = os.path.abspath(os.path.split(__file__)[0])
 class TestIntegrationQa:
     # We will check cluster and flatly refuse to do integration testing unless on 'minikube'
     CONTEXT = "minikube"
-    CONFIG = os.path.join(CURRENT_PATH, "..", "examples", "qa", "nephos_config.yaml")
-    TLS_PATH = os.path.join(CURRENT_PATH, "..", "examples", "ca-nephos-local")
+    CONFIG = os.path.join(CURRENT_PATH, "..", "networks", "qa", "nephos_config.yaml")
+    TLS_PATH = os.path.join(CURRENT_PATH, "..", "networks", "ca-nephos-local")
     logging.basicConfig(
         level=logging.DEBUG,
         format='%(asctime)s %(module)-10s %(levelname)-8s %(message)s'

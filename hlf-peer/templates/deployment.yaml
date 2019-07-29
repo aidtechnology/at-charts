@@ -205,8 +205,8 @@ spec:
             {{- end }}
             {{- if .Values.secrets.channels }}
             {{- range .Values.secrets.channels}}
-              - mountPath: /hl_config/channel/{{.}}
-                name: {{.}}
+            - mountPath: /hl_config/channel/{{.}}
+              name: {{.}}
             {{- end }}
             {{- end }}
             {{- if .Values.secrets.adminCert }}
