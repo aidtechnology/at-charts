@@ -45,7 +45,7 @@ url: https://ca.nephos.local
 # Membership Service Provider (MSP) directory
 # This is useful when the client is used to enroll a peer or orderer, so
 # that the enrollment artifacts are stored in the format expected by MSP.
-mspdir: /Users/sasha/Aid_Tech/nephos/examples/qa/crypto/OrdererMSP
+mspdir: /home/inzamam/Aid_Tech/nephos_original/examples/qa/crypto/AlphaMSP
 
 #############################################################################
 #    TLS section for secure socket connection
@@ -99,7 +99,10 @@ tls:
 #
 #############################################################################
 csr:
-  cn: ordadmin
+  cn: alphaadmin
+  keyrequest:
+    algo: ecdsa
+    size: 256
   serialnumber:
   names:
     - C: US
@@ -108,7 +111,7 @@ csr:
       O: Hyperledger
       OU: Fabric
   hosts:
-    - Alejandros-MacBook-Pro.local
+    - inzamam-HP-ProBook-4540s
 
 #############################################################################
 #  Registration section used to register a new identity with fabric-ca server
