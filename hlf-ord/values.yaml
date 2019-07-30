@@ -4,7 +4,7 @@
 
 image:
   repository: hyperledger/fabric-orderer
-  tag: 1.3.0
+  tag: 1.4.1
   pullPolicy: IfNotPresent
 
 service:
@@ -49,6 +49,12 @@ ord:
   type: solo
   ## MSP ID of the Orderer
   mspID: OrdererMSP
+  ## Orderer logging level
+  logging: debug
+  ## Orderer Kafka Replication Factor 
+  replicationFactor: "1"
+  ## Kafka Verbose
+  verbose: "true"
   # TLS
   tls:
     server:

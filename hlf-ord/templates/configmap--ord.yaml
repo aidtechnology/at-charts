@@ -17,7 +17,9 @@ data:
   ORDERER_GENERAL_ORDERERTYPE: {{ .Values.ord.type | quote }}
   ORDERER_GENERAL_LISTENADDRESS: 0.0.0.0
   ORDERER_GENERAL_LISTENPORT: "7050"
-  ORDERER_GENERAL_LOGLEVEL: debug
+  FABRIC_LOGGING_SPEC: {{ .Values.ord.logging | quote }}
+  ORDERER_KAFKA_TOPIC_REPLICATIONFACTOR: {{ .Values.ord.replicationFactor | quote }}
+  ORDERER_KAFKA_VERBOSE: {{ .Values.ord.verbose | quote }}
   ORDERER_GENERAL_LOCALMSPDIR: /var/hyperledger/msp
   ORDERER_GENERAL_LOCALMSPID: {{ .Values.ord.mspID | quote }}
   ORDERER_GENERAL_GENESISMETHOD: file
