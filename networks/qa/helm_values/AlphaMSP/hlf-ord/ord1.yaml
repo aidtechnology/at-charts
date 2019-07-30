@@ -1,21 +1,19 @@
-image:
-  tag: 1.3.0
 
 persistence:
   accessMode: ReadWriteOnce
   size: 1Gi
 
 ord:
-  type: solo
-  mspID: OrdererMSP
+  type: Solo
+  mspID: AlphaMSP
 
 secrets:
   ord:
     cert: hlf--ord1-idcert
     key: hlf--ord1-idkey
-    caCert: hlf--ordadmin-cacert
+    caCert: hlf--alphaadmin-cacert
   genesis: hlf--genesis
-  adminCert: hlf--ordadmin-idcert
+  adminCert: hlf--alphaadmin-idcert
 
 affinity:
   podAntiAffinity:

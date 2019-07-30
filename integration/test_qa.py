@@ -1,4 +1,5 @@
 import os
+import logging
 
 from nephos.fabric.settings import load_config, check_cluster
 from nephos.helpers.k8s import ns_create
@@ -13,6 +14,10 @@ class TestIntegrationQa:
     CONTEXT = "minikube"
     CONFIG = os.path.join(CURRENT_PATH, "..", "networks", "qa", "nephos_config.yaml")
     TLS_PATH = os.path.join(CURRENT_PATH, "..", "networks", "ca-nephos-local")
+    logging.basicConfig(
+        level=logging.DEBUG,
+        format='%(asctime)s %(module)-10s %(levelname)-8s %(message)s'
+    )
 
     def test_integration_qa(self):
         # Get options
@@ -25,18 +30,21 @@ class TestIntegrationQa:
         execute(
             (
                 "kubectl -n cas create secret tls ca--tls "
-                + "--cert={tls_path}.crt "
-                + "--key={tls_path}.key"
-            ).format(tls_path=self.TLS_PATH)
+                + f"--cert={self.TLS_PATH}.crt "
+                + f"--key={self.TLS_PATH}.key"
+            )
         )
 
         # TODO: There should be a more elegant way of obtaining all the releases
         releases = (
             [key for key in opts["cas"].keys()]
             + [key + "-pg" for key in opts["cas"].keys()]
-            + opts["orderers"]["names"]
-            + [("cdb-" + key) for key in opts["peers"]["names"]]
-            + [key for key in opts["peers"]["names"]]
+            + list(opts["msps"]["AlphaMSP"]["orderers"]["nodes"].keys())
+            + [
+                ("cdb-" + key)
+                for key in opts["msps"]["BetaMSP"]["peers"]["nodes"].keys()
+            ]
+            + [key for key in opts["msps"]["BetaMSP"]["peers"]["nodes"].keys()]
         )
 
         # Run Fabric script
@@ -49,10 +57,10 @@ class TestIntegrationQa:
         check_cluster(
             self.CONTEXT
         )  # Dangerous operation, recheck we have not shifted context
-        execute("helm delete --purge {}".format(" ".join(releases)))
+        execute(f"helm delete --purge {' '.join(releases)}")
 
         # Delete the namespaces
         check_cluster(
             self.CONTEXT
         )  # Dangerous operation, recheck we have not shifted context
-        execute("kubectl delete ns cas orderers peers".format(" ".join(releases)))
+        execute("kubectl delete ns cas alpha beta")
